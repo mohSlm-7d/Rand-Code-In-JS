@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Time Calculator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            /*if(document.onload){
+                $('#timeToSum').css('font-weight','bold').css('font-size','0.3vw');
+            }*/
+            function mouseOvrBttns(id){
+                $('button[id=\"'+id+'\"]').css('background-color','green');
+            }
+            function mouseOutBttns(id){
+                $('button[id=\"'+id+'\"]').css('background-color','#11996c');
+            }
+            function prepareTextBox(id,status){
+                var valid=new Array(3);
+                if(status=='focus'){
+                    valid= $('#'+id).val().split(':');
+                    if(isNaN(valid[0]) || isNaN(valid[1]) || isNaN(valid[2])){
+                    $('#'+id).val('::');
+                    $('#'+id).css('border','0.25vw solid green');}
+                }
+                else{
+                    if($('#'+id).val()==='::'){
+                        $('#'+id).val('');
+                        $('#'+id).attr('placeholder','hours:mins:seconds');
+                    }
+                    $('#'+id).attr('placeholder','hours:mins:seconds');
+                    $('#'+id).css('border','none');
+                }
+            }
+            var hours=0;
+            var mins=0;
+            var secs=0;
+            var days=0;
+            var years=0;
+            var decades=0;
+            var centuries=0;
+            var count=0;
+            var check;
+            var index;
+            var array= new Array(3);
+            /*while(true){
+                if(Calc()){
+                    console.log("LoopContinue");
+                    continue;
+                    
+                }
+                else{
+                    console.log("LoopBreak");                    
+                    break;
+                }
+            }*/
+            var subtrSecs=0;
+            var subtrMins=0;
+            var subtrHours=0;
+            var subtrDays=0;
+            
+            
+            var firstOccColon;
+            var lastOccColon;
+            console.log("YAA halaa");
+            function Calc(id){
+                check=$('#resultDiv').remove();
+                check=$('#timeToSum').val();
+                $('#timeToSum').val('hours:mins:seconds');
+                //check=toString(check);
+               // alert(`${check.search(':')}`);
+                firstOccColon=check.search(':');
+                lastOccColon=check.lastIndexOf(':');
+                if(check!=='hours: mins: seconds'&& check!=='hours:mins:seconds'&&check!==''&&check!=='::'){
+                    
+                    let countColon=0;
+                    let char='';
+                    /*for(let i=0; i<check.length; i++){
+
+                        if(check[i] ===':')
+
+                            countColon++;
+                    }*/
+                    
+                    for(char of check){
+                        if(char === ':')
+                            countColon++;
+                    }
+                    
+                    if(countColon!==2){
+                        
+                        return false;
+                    }
+                    
+                    
+                    
+                    count++;
+                    $("#calcSum").show();
+                    array=check.split(':');
+                    if(array[2]!=='')
+                        secs+=parseInt(array[2]);
+                    else{   
+                        secs+=0;
+                    }
+                    if(array[1]!=='')
+                        mins+=parseInt(array[1]);
+                    else{
+                        mins+=0;
+                    }
+                    if(array[0]!=='')
+                        hours+=parseInt(array[0]);
+                    else{
+                        hours+=0;
+                    }
+
+                    if(secs>59){
+                        mins+=parseInt(secs/60);
+                        secs=secs%60;
+                    }
+
+                    if(mins>59){
+                        hours+=parseInt(mins/60);
+                        mins=mins%60;
+                    }
+
+                    if(hours>23){
+                        days+=parseInt(hours/24);
+                        hours=hours%24;
+                    }
+
+                    if(days>364){
+                        years+=parseInt(days/365);
+                        days=days%365;
+                    }
+                    if(years>=10){
+                        decades+=parseInt(years/10);
+                        years=years%10;
+                    }
+                    if(decades>=10){
+                        centuries+= parseInt(decades/10);
+                        decades= decades%10;
+                        
+                    }
+
+                }
+
+                return false;
+            }
+                    
+            //var consoleMessage;
+                //alert("Jesse Pinkman");
+                var messageString;
+                var resultCount=0;
+            function Result(id){
+                
+                if(resultCount++>0){
+                    $('#resultDiv').remove();
+                }
+
+                /*var */messageString="<div id=\"resultDiv\"><p>The estimated time is: ";
+                if(hours==0){
+                    hours='00';
+                }
+                if(mins==0){
+                    mins='00';
+                }
+                if(secs==0){
+                    secs='00';
+                }
+                
+                
+                if(centuries>= 1){
+                    messageString+=`${centuries} centur`;
+
+                    if(centuries> 1)
+                        messageString+=`ies`;
+                    else
+                        messageString+=`y`;
+                    
+                    messageString+=` and, `;
+                }
+                
+                if(decades>= 1){
+                    messageString+=`${decades} decade`;
+                    if(centuries> 1){
+                        messageString+=`s`;
+                    }
+                    
+                    messageString+=` and, `;
+                }
+                
+                
+
+                if(years>=1){
+                    messageString+=years+" year";
+                    if(years>1)
+                        messageString+="s";
+                    messageString+=", and ";
+                }
+                if(days>=1){
+                    console.log("checking day");
+                    messageString+=days+"day";
+                    if(days>1)
+                        messageString+="s";
+                    messageString+=", and ";
+                    console.log("Checked dayssss");
+                }
+                if(hours<10 && hours!=0)
+                    messageString+="0"+hours+":";
+                else
+                    messageString+=hours+":";
+                if(mins<10 && mins!=0)
+                    messageString+="0"+mins+":";
+                else
+                    messageString+=mins+":";
+                if(secs<10 && secs!=0)
+                    messageString+="0"+secs;
+                else
+                    messageString+=secs;
+
+               //window.alert(messageString+"\n Number of times you entered: "+count);
+                var consoleMessage=messageString.substr(5,messageString.length);
+                console.log("Result "+consoleMessage);
+                console.log("Value of the counter: "+count);
+                messageString+="</p></div>";
+                var parent=$('#'+id).parent();
+                $(parent).append(messageString);
+            
+            
+                return false;
+            }
+            //Result();
+            //console.log(messageString);
+        </script>
+        <style>
+            input[type="date"]{
+                width: 50vw;
+                height: 20vh;
+            }
+            label[for="timeToSum"]{
+                color: default;
+                font-size: 2.3vw;
+                margin-left: 5%;    
+            }
+            html{
+                height:100%;
+            }
+            body{
+                background-image: url("Woods.png");
+                background-repeat: no-repeat;
+                color: rgb(4, 10, 1);
+                background-size:cover;
+                height: 100vh;
+            }
+            #timeSum{
+                background-color: grey;
+                border: 0.3vw dashed rgba(76, 255, 195,0.1);
+                height:40vh;
+                width:60%;
+                padding-top: 0.75%;
+                text-align: left;
+                position:absolute;
+                left:20%;
+                top:30vh;
+            }
+            input[id="timeToSum"]{
+                width:45%;
+            }
+            
+            #addToSum, #calcSum{
+                position: absolute;
+                left:16%;
+                top:45%;
+                background-color: rgb(17, 153, 108);
+                border:0.25vw solid rgb(9, 136, 94);
+                border-radius: 13.5%;
+            }
+            #timeSumForm>legend{
+                font-weight:bold;
+                font-size: 3vw;
+                text-align:center;
+                color:blue;
+            }
+            #calcSum{
+                left:58%;
+                display:none;               
+            }
+            #resultDiv{
+                position:absolute; top:60%; left:11%;
+                color: blue;
+                font-weight: bold;
+                border: 0.3vw solid rgb(48, 202, 48);
+                border-radius: 0.3vw;
+            }
+            @media screen and (min-width: 550px) and (max-width: 800px){
+                label[for="timeToSum"]{
+                font-size: 2.3vw;
+                margin-left: 1.8%;     
+                }
+                
+            #timeSum{
+                width:50%;
+                padding-top: 0.75%;
+            }
+            input[id="timeToSum"]{
+                width:45%;
+            }
+            
+            #addToSum, #calcSum{
+                left:16%;
+                top:45%;
+            }
+            #timeSumForm>legend{
+                font-size: 3vw;
+            }
+            #calcSum{
+                left:58%;               
+            }
+            #resultDiv{
+                top:60%; left:11%;
+            }
+            }
+            @media screen and (min-width: 880px) and (max-width: 1170px){
+                #timeSum{
+                width:50%;
+                padding-top: 0.75%;
+            }
+            input[id="timeToSum"]{
+                width:40%;
+            }
+            
+            #addToSum, #calcSum{
+                left:15%;
+                top:45%;
+            }
+            #timeSumForm>legend{
+                font-size: 2.5vw;
+            }
+            #calcSum{
+                left:57%;               
+            }
+            #resultDiv{
+                top:60%; left:15%;
+                width: 55%;
+            }
+            }
+            @media screen and (min-width: 1171px){
+                label[for="timeToSum"]{
+                    font-size: 1vw; 
+                }
+                #timeSum{
+                    width:30%;
+                    left:33%;
+                    top:30vh;                                    
+                    padding-top: 0.75%;
+                }
+                input[id="timeToSum"]{
+                    width:40%;
+                }
+            
+                #addToSum, #calcSum{
+                    left:20%;
+                    top:50%;
+                }
+                #timeSumForm>legend{
+                    font-weight:bold;
+                    font-size: 1.5vw;
+                }
+                #calcSum{
+                    left:60%;               
+                }
+                #resultDiv{
+                    top:70%; left:13%;
+                    width: 65%;
+                }
+            }
+        </style>
+        
+    </head>
+    <body>
+        <div id="timeSum">
+            <form id="timeSumForm" method="GET" action="">
+                <legend>Time Summation</legend><hr>
+                <span>
+                    <label for="timeToSum" ><strong>Enter ammount of time: </strong></label>
+                    <input id="timeToSum"type="text" value="hours: mins: seconds" onfocus="prepareTextBox('timeToSum','focus');" onblur="prepareTextBox('timeToSum','blur');">
+                </span>
+                <button id="addToSum"onclick="return Calc('addToSum');"onmouseover="return mouseOvrBttns('addToSum');" onmouseout="return mouseOutBttns('addToSum');" onclick="return Calc('timeToSum');">Add time</button>
+                <button id="calcSum" onclick="return Result('calcSum');" onmouseover="return mouseOvrBttns('calcSum');"onmouseout="return mouseOutBttns('calcSum');" onclick="return Result('calcSum');">Calculate</button>
+            </form>
+        </div>
+        <div>
+            <form>
+                <fieldset>
+                    <input type="datetime-local">
+                </fieldset>
+            </form>
+        </div>
+    </body>
+</html>
