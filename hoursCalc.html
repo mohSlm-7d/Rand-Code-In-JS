@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        var hours = 0;
+        var mins = 0;
+        var secs = 0;
+        var days = 0;
+        var years = 0;
+        var count = 0;
+        var check;
+        var index;
+        var array = new Array(3);
+        while (true) {
+            if (Calc()) {
+                console.log("LoopContinue");
+                continue;
+
+            } else {
+                console.log("LoopBreak");
+                break;
+            }
+        }
+        function Calc() {
+            check = window.prompt('Enter time in (hours: mins: seconds) format: \n(Press cancel to exit).', "::");
+            console.log("CalcEntered "+check);
+            if (check != null) {
+                if (check !== "::") {
+                    array = check.split(":");
+                    //alert(array[0]+"\n"+array[1]+"\n"+array[2]);
+                    if (isNaN(array[0]) || array[0]=='') {
+                        hours += 0;
+                    } else {
+                        hours += parseInt(array[0]);
+                    }
+                    if (isNaN(array[1]) || array[1]=='') {
+                        mins += 0;
+                    } else {
+                     mins+=parseInt(String(array[1]));
+                    }
+                    if (isNaN(array[2]) || array[2]=='') {
+                        secs += 0;
+                    } else {
+                        secs += parseInt(array[2]);
+                    }
+                    //alert("Hey!");
+                    //console.log(typeof(secs));
+                    //console,log(typeof(mins));
+                    //console.log(typeof(hours));
+
+                    //console.log("digits Division test: "+parseInt(parseInt(hours)/Math.pow(10,hours.toString().length-1)));
+                    //hours= toString(hours);
+                    var check = hours+"";
+                    console.log("Hours: "+hours+"\nHours Length: "+check.length);
+                    /*if(toString(hours).length > 2 && parseInt(hours/Math.pow(10,toString(hours).length-1))==0){
+                            console.log("digits Division test: "+parseInt(hours/Math.pow(10,hours.toString().length-1)));
+                            hours=hours.toString();
+                            index=hours.lastIndexOf("0");
+                            console.log(index);
+                            hours=hours.substr(index+1);
+                            hours=parseInt(hours);
+                        }*/
+                    check = mins+"";
+                    console.log("Minutes: "+mins+"\nMinutes Length: "+check.length);
+                    /*if(mins.toString().length > 2){
+                            mins=mins.toString();
+                            var index=mins.lastIndexOf("0");
+                            console.log(index);
+                            mins=mins.substr(index+1);
+                            mins=parseInt(mins);
+                        }*/check = secs+"";
+                    console.log("Seconds: "+secs +"\nSeconds Length: "+check.length);
+                    /*if(secs.toString().length> 2){
+                            secs=secs.toString();
+                            var index=secs.lastIndexOf("0");
+                            console.log(index);
+                            secs=secs.substr(index+1);
+                            secs=parseInt(secs);
+                        }*/
+                    if (secs > 59) {
+                        mins += parseInt(secs/60);
+                        secs -= (parseInt(secs/60))*60;
+                    }
+                    if (mins > 59) {
+                        hours += parseInt(mins/60);
+                        mins -= parseInt(mins/60)*60;
+                    }
+                    if (hours >= 24) {
+                        days += parseInt(hours/24);
+                        hours -= (parseInt(hours/24))*24;
+                    }
+                    if (days >= 365) {
+                        years += parseInt(days/365);
+                        days -= (parseInt(days/365))*365;
+                    }
+
+
+
+                }
+                count++;
+            } else {
+                Result();
+                return 0;
+            }
+            //alert("Jesse Pinkman");
+            return 1;
+        }
+        function Result() {
+            var messageString = "The estimated time is: ";
+            if (hours == 0) {
+                hours = '00';
+            }
+            if (mins == 0) {
+                mins = '00';
+            }
+            if (secs == 0) {
+                secs = '00';
+            }
+
+
+            if (years >= 1) {
+                messageString += years+" year";
+                if (years > 1)
+                    messageString += "s";
+                messageString += ", and ";
+            }
+            if (days >= 1) {
+                console.log("checking day");
+                messageString += days+"day";
+                if (days > 1)
+                    messageString += "s";
+                messageString += ", and ";
+                console.log("Checked dayssss");
+            }
+            if (hours < 10 && hours != 0)
+                messageString += "0"+hours+":";
+            else
+                messageString += hours+":";
+            if (mins < 10 && mins != 0)
+                messageString += "0"+mins+":";
+            else
+                messageString += mins+":";
+            if (secs < 10 && secs != 0)
+                messageString += "0"+secs;
+            else
+                messageString += secs;
+            window.alert(messageString+"\n Number of times you entered: "+count);
+            console.log("Result "+messageString);
+            console.log("Value of the counter: "+count);
+            /*<?php
+                 $resulttime=messageString;
+                 echo "<div>The estimated total time is: $resulttime";
+            ?>*/
+        }
+
+    </script>
+</head>
+</html>

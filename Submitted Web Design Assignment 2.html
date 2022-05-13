@@ -1,0 +1,248 @@
+<!--Mohammad Salman-20190901
+    معن عبدالناصر عبد السلام-20190014
+    Abdelraheim obeidi 20190845-->
+<!DOCTYPE html>
+<html>
+    <head>
+            <title>Math Practice</title>
+            <style>
+                body{
+                    background-color: #33cccc;
+                    color:#3333ff;
+                }
+                div{
+                   background-color: #66ff99;
+                   border: 7px dashed #6666ff;
+                   border-radius: 5px;
+                   position: absolute;
+                   top:30%;
+                   left:34%;
+                   height: 50%;
+                }
+                #questionLabel{
+                    border: 5px dotted #0099cc;
+                    border-radius: 5px;
+                    color: #4a4aff;
+                    font-size: 22px;
+                }
+                #questionCell{
+                    text-align: center;
+                    padding-top: 80px;
+                }
+                #operationsLabel{
+                    text-align: center;
+                    font-size: 15px;
+                }
+                #buttonsCell{
+                    text-align: center;
+                }
+                #submitCell{
+                    text-align: center;
+                }
+                input[type="text"]{
+                    border-radius: 4px;
+                    border: 3px solid #0099ff;
+                    height: 40px;
+                    font-size: 15px;
+                    font-weight: bold;
+                    text-align: center;
+                }
+                button{
+                    background-color:#0099ff;
+                    border-radius: 5px;
+                    height: 35px;
+                }
+                button:hover{
+                    background-color: #0066ff;
+                }
+            </style>
+
+
+    </head>
+    <body>
+        <div>
+            <form action="" method="get">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><label id="operationsLabel"><h1><strong>Choose a type of arithmetic operation:</strong></h1></label></th>
+                        </tr>
+                    </thead>
+                        <tr>
+                            <td id="buttonsCell">
+                                <button id="addButton" name="additionBttn" onclick="return check('+')">Addition</button>
+                                <button id="subtractButton" name="subtBttn" onclick="return check('-')">Subtraction</button>
+                                <button id="multiplyButton" name="multpBttn" onclick="return check('*')">Multiplication</button>
+                                <button id="divideButton" name="DivideBttn" onclick="return check('/')">Division</button>
+                                <button id="randButton" name="randBttn" onclick="return check('r')">Random mixture</button>
+                            </td>
+                        </tr>
+                    <tr id="questionRow" rowspan="2">
+                        <td id="questionCell">
+                            <label id="questionLabel">Your question here!</label>
+                            <input id="answer" type="text" name="answer" placeholder="Your answer here!">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="submitCell">
+                            <button id="submitButton"  onclick="return checkAnswer()">Submit Answer</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <script>           
+            var question = document.getElementById('questionLabel');
+            var answer = document.getElementById('answer');
+            var num1;
+            var num2;
+            var operation ='';
+            var value;
+            var correct=0;
+            var incorrect=0;
+            var checkRandom=false;
+            function Question(){
+                    num1 = (parseInt(Math.random()*100)+1);
+                    num2 = (parseInt(Math.random()*100)+1);
+                    question.innerText='How much is '+num1+' '+operation+' '+num2+' ?';
+            }
+
+			function checkAnswer(){
+				if(j >= 10){
+                    window.alert('you have completed your 10 questions!');
+                    return false;
+                }
+                if(!isNaN(answer.value) && answer.value != ''){
+                    value = answer.value;
+				    answer.value='';
+                    j++;
+
+				    if (operation == '+'){
+					    if(value == num1 + num2){
+						    correct++;
+					    }
+					    else {
+                            incorrect++;
+                        }
+
+                    }
+                    else if(operation == '-'){
+                        if(value == num1 - num2)
+                            correct++;
+                        else
+                            incorrect++;
+                    }
+                    else if( operation == '*'){
+                        if(value == num1 * num2)
+                            correct++;
+                        else
+                            incorrect++;
+                    }
+                    else if(operation == '/'){
+                        if(value == num1 / num2)
+                            correct++;
+                        else
+                            incorrect++;
+                    }
+                    if(checkRandom){
+                        operation = (Math.random()*(4 - 1) + 1);
+                        fraction = operation - parseInt(operation);
+                        if(fraction >= 0.5)
+                            operation = Math.ceil(operation);
+                        else
+                            operation = Math.floor(operation);
+                        console.log(operation);
+                        if(operation == 1)
+                            operation = '+';
+                        else if(operation == 2)
+                            operation = '-';
+                        else if(operation == 3)
+                            operation = '*';
+                        else
+                        operation = '/';
+                    }
+                    if (j < 10){
+                    	Question();
+                    }
+                    else {
+                        if(checkRandom)
+                            checkRandom=false;
+						if (correct > 7){
+							alert("Congratulations, you are ready to go to the next level!");
+                            operation='';
+                            question.innerText='Your question here!';
+                            resultLabel=document.createElement('label');
+                            div=document.getElementsByTagName('div')[0];
+                            resultText=document.createTextNode('Your result is '+(correct/j)*100+'%');
+                            resultLabel.appendChild(resultText);
+                            resultLabel.style.border='5px groove #99ccff';
+                            resultLabel.style.borderRadius='5px';
+                            resultLabel.style.position='absolute';
+                            resultLabel.style.top='80%';
+                            resultLabel.style.right='35%';
+                            resultLabel.style.textAlign='center';
+                            resultLabel.style.fontSize='25px';
+                            div.appendChild(resultLabel);
+						}
+						else {
+							alert("Please ask your teacher for extra help.");
+                            operation='';
+                            question.innerText='Your question here!';
+                            question.innerText='Your question here!';
+                            resultLabel=document.createElement('label');
+                            div=document.getElementsByTagName('div')[0];
+                            resultText=document.createTextNode('Your result is '+(correct/j)*100+'%');
+                            resultLabel.appendChild(resultText);
+                            resultLabel.style.border='5px groove #99ccff';
+                            resultLabel.style.position='absolute';
+                            resultLabel.style.top='80%';
+                            resultLabel.style.right='35%';
+                            resultLabel.style.textAlign='center';
+                            resultLabel.style.fontSize='25px';
+                            div.appendChild(resultLabel);                       
+						}
+                    }
+                }
+                
+                return false;
+
+			}
+
+            function check(op){
+                if(operation){
+                    alert('You have already chosen your operation!');
+                    return false;
+                }
+                operation= op;
+                j=0;
+                num1= 0;
+                num2= 0;
+                correct = 0;
+                incorrect = 0;
+
+                if(operation == 'r'){
+                    checkRandom=true;
+                        operation = (Math.random()*(4 - 1) + 1);
+                        fraction = operation - parseInt(operation);
+                        if(fraction >= 0.5)
+                            operation = Math.ceil(operation);
+                        else
+                            operation = Math.floor(operation);
+                        console.log(operation);
+                        
+                        if(operation == 1)
+                            operation = '+';
+                        else if(operation == 2)
+                            operation = '-';
+                        else if(operation == 3)
+                            operation = '*';
+                        else
+                        operation = '/';
+                }
+				Question();
+
+				return false;
+            }
+        </script>
+    </body>
+</html>
